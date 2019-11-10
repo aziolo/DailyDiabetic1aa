@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightPrimary"
+    android:orientation="vertical"
+    tools:context=".view.AddMeasurementFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/CV_date_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_date_and_hour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingTop="@dimen/cardview_compat_inset_shadow"
+                        android:text="data i godzina: "
+                        android:textSize="24sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_date"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@android:color/background_light"
+                            android:drawableBottom="@drawable/ic_event_green_35dp"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/text_show_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:foregroundGravity="clip_vertical"
+                            android:gravity="center"
+                            android:paddingStart="10dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button_time"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="@android:color/background_light"
+                            android:drawableBottom="@drawable/ic_access_time_green_35dp"
+                            android:gravity="center" />
+
+                        <TextView
+                            android:id="@+id/text_show_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingStart="10dp"
+                            android:paddingLeft="10dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <CheckBox
+                android:id="@+id/CB_glikemia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/glikemia" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/glikemia_CV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_glikemia_TV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_glikemia" />
+
+                    <EditText
+                        android:id="@+id/ET_glikemia_input"
+                        android:layout_width="187dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:ems="10"
+                        android:hint="@string/hint_glikemia"
+                        android:inputType="numberSigned" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <CheckBox
+                android:id="@+id/CB_insulin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/insulin" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/insulin_CV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tit_ins"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_insulin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/ET_insulin_input"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:hint="@string/hint_insulin"
+                        android:inputType="numberSigned"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tit_ins" />
+
+                    <TextView
+                        android:id="@+id/type_input_TV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="typ np. wyrównanie"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ET_insulin_input" />
+
+                    <Spinner
+                        android:id="@+id/spinner_type_insulin"
+                        android:layout_width="146dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/type_input_TV" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <CheckBox
+                android:id="@+id/CB_pressure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/blood_pressure" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/pressure_CV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/title_systolic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/title_systolic"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/title_diastolic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_diastolic"
+                        app:layout_constraintStart_toEndOf="@+id/title_systolic"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/ET_systolicBP_input"
+                        android:layout_width="118dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:hint="@string/hint_systolic"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_systolic" />
+
+                    <TextView
+                        android:id="@+id/divider"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/divider_pressure"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/ET_systolicBP_input"
+                        app:layout_constraintTop_toBottomOf="@+id/title_diastolic" />
+
+                    <EditText
+                        android:id="@+id/ET_diastolicBP_input"
+                        android:layout_width="118dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:hint="@string/hint_diastolic"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_pulse" />
+
+                    <TextView
+                        android:id="@+id/title_pulse"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/title_pulse"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ET_systolicBP_input" />
+
+                    <EditText
+                        android:id="@+id/ET_pulse_input"
+                        android:layout_width="105dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:ems="10"
+                        android:hint="@string/hint_pulse"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toEndOf="@+id/divider"
+                        app:layout_constraintTop_toBottomOf="@+id/title_systolic" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <CheckBox
+                android:id="@+id/CB_medicine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/medicines" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/medicines_CV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/title_medicines_TV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_medicines"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/spinner_medicines"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_medicines_TV" />
+
+                    <TextView
+                        android:id="@+id/title_dose_of_med"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/title_medicines_dose"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_medicines" />
+
+                    <EditText
+                        android:id="@+id/ET_dose_med_input"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="number"
+                        app:layout_constraintStart_toEndOf="@+id/title_dose_of_med"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_medicines" />
+
+                    <EditText
+                        android:id="@+id/ET_med_name_input"
+                        android:layout_width="72dp"
+                        android:layout_height="68dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="60dp"
+                        android:ems="10"
+                        android:hint="@string/hint_med_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_medicines_TV" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/button_save_measure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@drawable/ic_check_white_35dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/save" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

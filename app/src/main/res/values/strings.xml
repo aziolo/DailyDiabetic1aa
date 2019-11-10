@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">DailyDiabetic1</string>
+
+    <string name="glikemia">Glikemia</string>
+    <string name="profile">Profil</string>
+    <string name="raports">Raporty</string>
+
+    <string name="blood_pressure">Ciśnienie </string>
+    <string name="insulin">Insulina</string>
+    <string name="medicines">Leki</string>
+    <string name="save">Zapisz</string>
+    <string name="edit">Edytuj</string>
+
+    <string name="title_systolic">Skurczowe: mmHg</string>
+    <string name="title_diastolic">Rozkurczowe: mmHG</string>
+    <string name="title_pulse">Tętno: uderzeń/min</string>
+    <string name="title_pulse2">tętno</string>
+    <string name="title_glikemia1">Glikemia: mg/dl</string>
+
+    <string name="unit_pressure"> mmHG/mmHG</string>
+    <string name="unit_pulse"> uderzeń/min </string>
+    <string name="title_insulin"> dawka: jednostki </string>
+    <string name="title_glikemia"> poziom: mg/dl </string>
+    <string name="title_medicines"> Preparat: </string>
+    <string name="title_medicines_dose"> Dawka: </string>
+
+    <string name="hint_systolic">np. 140 </string>
+    <string name="hint_diastolic">np. 80 </string>
+    <string name="hint_pulse">np. 160 </string>
+    <string name="hint_glikemia">np. 120 </string>
+    <string name="hint_insulin">np. 12 j. </string>
+    <string name="hint_medicie">np. 1 tabletka </string>
+    <string name="divider_pressure"> / </string>
+    <string name="nothing_to_show">Brak pomiarów</string>
+    <string name="nothing_to_show_med">Brak dawek</string>
+    <string name="hour">godzina</string>
+    <string name="type">typ</string>
+    <string name="level">poziom: mmhg/mmHg</string>
+    <string name="med_name"> preparat</string>
+    <string name="hint_med_name"> nazwa leku</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

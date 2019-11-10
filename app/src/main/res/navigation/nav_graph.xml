@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/calendarFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.alemz.dailydiabetic1.view.FirstFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" />
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.alemz.dailydiabetic1.view.SecondFragment"
+        android:label="fragment_second"
+        tools:layout="@layout/fragment_second" />
+    <fragment
+        android:id="@+id/addMeasurementFragment"
+        android:name="com.alemz.dailydiabetic1.view.AddMeasurementFragment"
+        android:label="fragment_add_measurement"
+        tools:layout="@layout/fragment_add_measurement" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.alemz.dailydiabetic1.view.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.alemz.dailydiabetic1.view.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendarFragment_to_addMeasurementFragment"
+            app:destination="@id/addMeasurementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/raportFragment"
+        android:name="com.alemz.dailydiabetic1.view.RaportFragment"
+        android:label="fragment_raport"
+        tools:layout="@layout/fragment_raport" />
+</navigation>
