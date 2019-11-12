@@ -28,6 +28,11 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/glikemia"
                     android:textSize="24sp" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/glikemiaChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView

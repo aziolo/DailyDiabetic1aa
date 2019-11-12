@@ -102,24 +102,15 @@ class CalendarFragment : Fragment() {
 
         //calendar
         val cv = view.findViewById<CalendarView>(R.id.calendarView)
-       // selectedDate = Calendar.DAY_OF_MONTH.toString() + "." + Calendar.MONTH.toString() + "." + Calendar.YEAR.toString()
-        //selectedTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()+ "." +  Calendar.getInstance().get(Calendar.MINUTE).toString()
-        //selectedDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()+ "." +  Calendar.getInstance().get(Calendar.MONTH).toString() + "." + Calendar.getInstance().get(Calendar.YEAR).toString()
-        var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()
-        var month = Calendar.getInstance().get(Calendar.MONTH).toString()
-        if(day.length == 1) day = "0" + day
-        if(month.length == 1) month = "0" + month
-        selectedDate = day + "." + month + "." + Calendar.getInstance().get((Calendar.YEAR))
 
+        selectedDate = getInstanceDate()
+        selectedTime = getInstanceTime()
 
-        var min = Calendar.getInstance().get(Calendar.MINUTE).toString()
-        var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
-        if(min.length == 1) min = "0" + min
-        selectedTime = hour + "." + min
         Toast.makeText(context, selectedDate+ selectedTime, Toast.LENGTH_SHORT).show()
         list = arrayListOf()
         list.add(0,selectedDate)
         list.add(1,selectedTime)
+
         //recyclerViews
         val recyclerViewG = view.findViewById<RecyclerView>(R.id.glikemiaRecyclerView)
         recyclerViewG.layoutManager = LinearLayoutManager(context)
@@ -137,64 +128,80 @@ class CalendarFragment : Fragment() {
         recyclerViewM.layoutManager = LinearLayoutManager(context)
         recyclerViewM.adapter = adapterM
 
-
-        //for begining- when user has not chosen the date yet.
-        appViewModel.getGlikemiaForChosenDate(selectedDate).observe(this, Observer<List<GlikemiaEntity>> { t -> adapterG.setGlikemia(t!!) })
-        appViewModel.getBPForChosenDate(selectedDate).observe(this, Observer<List<PressureEntity>>{t-> adapterBP.setPressure(t!!) })
-        appViewModel.getInsulinForChosenDate(selectedDate).observe(this, Observer<List<InsulinEntity>> { t -> adapterI.setInsulin(t!!) })
-        appViewModel.getMedForChosenDate(selectedDate).observe(this, Observer<List<MedicineEntity>> { t -> adapterM.setMed(t!!) })
-
         nothingG = view.findViewById(R.id.nothing_glikemia_text)
         nothingI = view.findViewById(R.id.nothing_insulin_text)
         nothingBP = view.findViewById(R.id.nothing_pressure_text)
         nothingMed = view.findViewById(R.id.nothing_med_text)
 
+        //for begining- when user has not chosen the date yet.
+        DrawHistoryCalebdar()
+
+
 
         cv.setOnDateChangeListener{
                 _, year, month, dayOfMonth->  selectedDate = "$dayOfMonth.${month+1}.$year"
 
-            var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()
-            var mon = Calendar.getInstance().get(Calendar.MONTH).toString()
+            var day = dayOfMonth.toString()
+            var mon = (month+1).toString()
             if(day.length == 1) day = "0" + day
             if(mon.length == 1) mon = "0" + mon
-            selectedDate = day + "." + mon + "." + Calendar.getInstance().get((Calendar.YEAR))
+            selectedDate = day + "." + mon + "." + "$year"
+            Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
 
-            var min = Calendar.getInstance().get(Calendar.MINUTE).toString()
-            var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
-            if(min.length == 1) min = "0" + min
-           // if(hour.length == 1) hour = "0"+ hour
-            //selectedTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()+ "." +  Calendar.getInstance().get(Calendar.MINUTE).toString()
-            selectedTime = hour + "." + min
+            selectedTime = getInstanceTime()
+            DrawHistoryCalebdar()
 
-            appViewModel.getGlikemiaForChosenDate(selectedDate).observe(this, Observer<List<GlikemiaEntity>> { t ->
-                adapterG.setGlikemia(t!!)
-                if(adapterG.itemCount > 0) nothingG.isVisible = false
-                if(adapterG.itemCount == 0) nothingG.isVisible = true
-            })
-            appViewModel.getBPForChosenDate(selectedDate).observe(this, Observer<List<PressureEntity>>{t->
-                adapterBP.setPressure(t!!)
-                if(adapterBP.itemCount > 0) nothingBP.isVisible = false
-                if(adapterBP.itemCount == 0) nothingBP.isVisible = true
-            })
-            appViewModel.getInsulinForChosenDate(selectedDate).observe(this, Observer<List<InsulinEntity>> { t ->
-                adapterI.setInsulin(t!!)
-                if(adapterI.itemCount > 0) nothingI.isVisible = false
-                if(adapterI.itemCount == 0) nothingI.isVisible = true
-            })
-            appViewModel.getMedForChosenDate(selectedDate).observe(this, Observer<List<MedicineEntity>> { t ->
-                adapterM.setMed(t!!)
-                if(adapterM.itemCount > 0) nothingMed.isVisible = false
-                if(adapterM.itemCount == 0) nothingMed.isVisible = true
-            })
-
-            //list.add(0,selectedDate)
-            //list.add(1,selectedTime)
             list[0] = selectedDate
             list[1] = selectedTime
         }
 
 
         return view
+    }
+
+    private fun getInstanceTime() : String {
+        var min = Calendar.getInstance().get(Calendar.MINUTE).toString()
+        var hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()
+        if (min.length == 1) min = "0" + min
+        val time =  hour + "." + min
+        return time
+    }
+
+    private fun getInstanceDate(): String {
+        var day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH).toString()
+        val month = Calendar.getInstance().get(Calendar.MONTH) + 1
+        var mon: String = month.toString()
+        if (day.length == 1) day = "0" + day
+        if (mon.length == 1) mon = "0" + mon
+        val today = day + "." + mon + "." + Calendar.getInstance().get((Calendar.YEAR))
+        return today
+    }
+
+    private fun DrawHistoryCalebdar() {
+        appViewModel.getGlikemiaForChosenDate(selectedDate)
+            .observe(this, Observer<List<GlikemiaEntity>> { t ->
+                adapterG.setGlikemia(t!!)
+                if (adapterG.itemCount > 0) nothingG.isVisible = false
+                if (adapterG.itemCount == 0) nothingG.isVisible = true
+            })
+        appViewModel.getBPForChosenDate(selectedDate)
+            .observe(this, Observer<List<PressureEntity>> { t ->
+                adapterBP.setPressure(t!!)
+                if (adapterBP.itemCount > 0) nothingBP.isVisible = false
+                if (adapterBP.itemCount == 0) nothingBP.isVisible = true
+            })
+        appViewModel.getInsulinForChosenDate(selectedDate)
+            .observe(this, Observer<List<InsulinEntity>> { t ->
+                adapterI.setInsulin(t!!)
+                if (adapterI.itemCount > 0) nothingI.isVisible = false
+                if (adapterI.itemCount == 0) nothingI.isVisible = true
+            })
+        appViewModel.getMedForChosenDate(selectedDate)
+            .observe(this, Observer<List<MedicineEntity>> { t ->
+                adapterM.setMed(t!!)
+                if (adapterM.itemCount > 0) nothingMed.isVisible = false
+                if (adapterM.itemCount == 0) nothingMed.isVisible = true
+            })
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -26,6 +26,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -61,5 +65,8 @@ dependencies {
     //injection
     implementation "com.google.dagger:dagger:2.12"
     kapt "com.google.dagger:dagger-compiler:2.12"
+
+    //charts
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }
