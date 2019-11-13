@@ -134,7 +134,7 @@ class CalendarFragment : Fragment() {
         nothingMed = view.findViewById(R.id.nothing_med_text)
 
         //for begining- when user has not chosen the date yet.
-        DrawHistoryCalebdar()
+        DrawHistoryCalendar()
 
 
 
@@ -149,7 +149,7 @@ class CalendarFragment : Fragment() {
             Toast.makeText(context, selectedDate, Toast.LENGTH_SHORT).show()
 
             selectedTime = getInstanceTime()
-            DrawHistoryCalebdar()
+            DrawHistoryCalendar()
 
             list[0] = selectedDate
             list[1] = selectedTime
@@ -177,7 +177,7 @@ class CalendarFragment : Fragment() {
         return today
     }
 
-    private fun DrawHistoryCalebdar() {
+    private fun DrawHistoryCalendar() {
         appViewModel.getGlikemiaForChosenDate(selectedDate)
             .observe(this, Observer<List<GlikemiaEntity>> { t ->
                 adapterG.setGlikemia(t!!)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProviders
 import com.alemz.dailydiabetic1.AppViewModel
 import com.alemz.dailydiabetic1.R
@@ -16,8 +17,12 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import java.util.*
 import kotlin.collections.ArrayList
@@ -65,9 +70,22 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         // Inflate the layout for this fragment
 
         appViewModel.getAllGlicemia().observe(this, Observer<List<GlikemiaEntity>>{t->
-            //        adapterBP.setPressure(t!!)
-//        if(adapterBP.itemCount > 0) nothingBP.isVisible = false
-//        if(adapterBP.itemCount == 0) nothingBP.isVisible = true
+
+            val list = ArrayList(t)
+            var values: ArrayList<Entry> = ArrayList()
+            var i: Int = 0
+            for (i in 0  until list.size){
+                val amount = list[i].amount.toFloat()
+                values.add(Entry(i.toFloat(),amount,R.drawable.a2))
+
+            }
+            val set1: LineDataSet =  LineDataSet(values, "glikemia")
+
+            val dataSets: ArrayList<ILineDataSet> = ArrayList()
+            dataSets.add(set1)
+            val data: LineData = LineData(dataSets)
+            chart.data =data
+
         })
 
 

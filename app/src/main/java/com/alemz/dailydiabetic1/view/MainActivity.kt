@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity(), FirstFragment.OnFragmentInteractionLis
         //ONLY FOR TESTS !!!!
         appViewModel.insertProfile(ProfileEntity(1, 2,"Monika", "Zioło", "abc@gmail.com","2",52.0,1.62, 350.0, "doctor@gmail.com", 1800))
 
-        appViewModel.insertGlikemia(GlikemiaEntity(1,1,10.0,"1.11.2019", "13:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(2,1,12.0,"11.11.2019", "14:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(3,1,13.0,"12.11.2019", "15:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(4,1,14.0,"12.11.2019", "16:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(5,1,15.0,"13.11.2019", "15:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(6,1,16.0,"13.11.2019", "16:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(7,1,17.0,"14.11.2019", "15:13"))
-        appViewModel.insertGlikemia(GlikemiaEntity(8,1,18.0,"14.11.2019", "16:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(1,1,100.0,"1.11.2019", "13:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(2,1,120.0,"11.11.2019", "14:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(3,1,130.0,"12.11.2019", "15:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(4,1,140.0,"12.11.2019", "16:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(5,1,150.0,"13.11.2019", "15:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(6,1,160.0,"13.11.2019", "16:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(7,1,170.0,"14.11.2019", "15:13"))
+        appViewModel.insertGlikemia(GlikemiaEntity(8,1,180.0,"14.11.2019", "16:13"))
 
         appViewModel.insertBP(PressureEntity(1,1,120,80,100, "9.11.2019", "11:53"))
         appViewModel.insertBP(PressureEntity(2,1,120,80,100, "11.11.2019", "11:54"))
