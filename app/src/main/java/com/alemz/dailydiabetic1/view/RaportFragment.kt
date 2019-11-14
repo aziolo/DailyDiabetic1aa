@@ -21,9 +21,11 @@ import com.github.mikephil.charting.data.DataSet
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -72,13 +74,13 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         appViewModel.getAllGlicemia().observe(this, Observer<List<GlikemiaEntity>>{t->
 
             val list = ArrayList(t)
-            var values: ArrayList<Entry> = ArrayList()
-            var i: Int = 0
-            for (i in 0  until list.size){
-                val amount = list[i].amount.toFloat()
-                values.add(Entry(i.toFloat(),amount,R.drawable.a2))
-
-            }
+            val values: ArrayList<Entry> = ArrayList()
+//            for (i in 0  until list.size){
+//                val amount = list[i].amount.toFloat()
+//                val date: String = list[i].date
+//                values.add(Entry(date.toFloat(), amount))
+//
+//            }
             val set1: LineDataSet =  LineDataSet(values, "glikemia")
 
             val dataSets: ArrayList<ILineDataSet> = ArrayList()
@@ -89,9 +91,10 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         })
 
 
-        chart = view.findViewById(R.id.glikemiaChart)
-        var xAxis: XAxis = chart.xAxis
-        var yAxis: YAxis = chart.axisLeft
+//        chart = view.findViewById(R.id.glikemiaChart)
+//        var xAxis: XAxis = chart.xAxis
+//        xAxis.valueFormatter = "dd.mm.yyyy"
+//        var yAxis: YAxis = chart.axisLeft
 
         return view
     }
@@ -166,4 +169,12 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         })
 
     }
+
+//    abstract class DateAxisValueFormatter: IAxisValueFormatter {
+//        private val mValues: String = ""
+//        private var sfd: SimpleDateFormat = SimpleDateFormat("dd.mm.yyyy")
+//        val s = "ddfgsf"
+//        private var netDate: Date = Date(Long.parseLong(s))
+//
+//    }
 }

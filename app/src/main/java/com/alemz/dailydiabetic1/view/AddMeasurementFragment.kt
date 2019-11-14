@@ -198,8 +198,8 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
            // if(minute.length == 1) (minute = "0" + minute)
             //selectedTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()+ "." +  Calendar.getInstance().get(Calendar.MINUTE).toString()
             //selectedTime = hour + "." + minute
-            if (minute<10) choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { view, h, m -> time.text="$h:0$m" }), hour, minute,true)
-            else choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { view, h, m -> time.text="$h:$m" }), hour, minute,true)
+            if (minute<10) choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { _, h, m -> time.text="$h:0$m" }), hour, minute,true)
+            else choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { _, h, m -> time.text="$h:$m" }), hour, minute,true)
             choserTime.show()
 
             ///var inputTypeInsulin = spinnerInsulin.selectedItem.toString()
