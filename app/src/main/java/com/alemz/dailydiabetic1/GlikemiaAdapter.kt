@@ -22,7 +22,7 @@ class GlikemiaAdapter(): RecyclerView.Adapter<GlikemiaAdapter.GlikemiaHolder>() 
 
     override fun onBindViewHolder(holder: GlikemiaHolder, position: Int) {
         val currentGlikemia = list[position]
-        holder.time.text = currentGlikemia.time
+        holder.time.text = currentGlikemia.date.substring(11,16)
         holder.amount.text = currentGlikemia.amount.toString()
     }
 

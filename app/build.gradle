@@ -69,4 +69,11 @@ dependencies {
     //charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    //ViewPager
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+
+    //calendarview-view
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+
 }

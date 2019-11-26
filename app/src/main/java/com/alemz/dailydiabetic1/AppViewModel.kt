@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.alemz.dailydiabetic1.data.entities.*
+import java.util.*
 
 class AppViewModel(application: Application): AndroidViewModel(application) {
     //private var date = Calendar.getInstance().toString()
@@ -11,6 +12,8 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     private var allGlikemia: LiveData<List<GlikemiaEntity>> = repository.getAllGlikemia()
     private var allBP: LiveData<List<PressureEntity>> = repository.getAllBP()
     private var allInsulin: LiveData<List<InsulinEntity>> = repository.getAllInsulin()
+    private var settleInsulin: LiveData<List<InsulinEntity>> = repository.getAllInsulin()
+    private var foodInsulin: LiveData<List<InsulinEntity>> = repository.getAllInsulin()
     private var profile: LiveData<List<ProfileEntity>> = repository.getProfil()
     private var allMedicines: LiveData<List<MedicineEntity>> = repository.getAllMedicines()
 
@@ -24,6 +27,12 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getAllInsulin(): LiveData<List<InsulinEntity>>{
         return allInsulin
+    }
+    fun getSettleInsulin(): LiveData<List<InsulinEntity>>{
+        return settleInsulin
+    }
+    fun getFoodInsulin(): LiveData<List<InsulinEntity>>{
+        return foodInsulin
     }
     fun getProfile(): LiveData<List<ProfileEntity>>{
         return profile
@@ -57,6 +66,14 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getMedForChosenDate(d:String): LiveData<List<MedicineEntity>>{
         val list = repository.getMedForChosenDate(d)
+        return list
+    }
+    fun sumAllSettleInsulinForChosenDate(d: String): Double{
+        val list = repository.sumAllSettle(d)
+        return list
+    }
+    fun sumAllFoodInsulinForChosenDate(d: String): Double{
+        val list = repository.sumAllFood(d)
         return list
     }
 

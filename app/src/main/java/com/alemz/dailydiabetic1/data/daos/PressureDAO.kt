@@ -8,10 +8,10 @@ import com.alemz.dailydiabetic1.data.entities.PressureEntity
 
 interface PressureDAO {
 
-    @Query("SELECT * FROM pressure")
+    @Query("SELECT * FROM pressure ORDER BY date")
     fun getAll(): LiveData<List<PressureEntity>>
 
-    @Query("SELECT * FROM pressure WHERE date LIKE :date")
+    @Query("SELECT * FROM pressure WHERE date LIKE :date ORDER BY date")
     fun findByDate(date: String): LiveData<List<PressureEntity>>
 
     @Insert

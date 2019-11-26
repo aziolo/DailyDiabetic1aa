@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.alemz.dailydiabetic1.AppViewModel
 import com.alemz.dailydiabetic1.R
 import com.alemz.dailydiabetic1.data.entities.*
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.reflect.typeOf
@@ -48,8 +49,8 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var choserDate: DatePickerDialog
     private lateinit var choserTime: TimePickerDialog
-    private lateinit var date: TextView
-    private lateinit var time: TextView
+    private lateinit var dateTV: TextView
+    private lateinit var timeTV: TextView
 
     private lateinit var inputGlikemia: EditText
     private lateinit var inputInsulin: EditText
@@ -75,6 +76,12 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var medName: String = ""
     private var medDose: Double = 1.0
 
+    private var chosenYear: Int = 0
+    private var chosenMonth: Int = 0
+    private var chosenDay: Int = 0
+    private var chosenHour: Int = 0
+    private var chosenMinute: Int = 0
+
     @Inject lateinit var viewModelFactory: ViewModelProvider.AndroidViewModelFactory
     val appViewModel: AppViewModel by lazy{ ViewModelProviders.of(this).get(AppViewModel::class.java)}
 
@@ -94,16 +101,14 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_add_measurement, container, false)
-
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
         datePicker = view.findViewById(R.id.button_date)
         timePicker = view.findViewById(R.id.button_time)
         save = view.findViewById(R.id.button_save_measure)
 
-        date = view.findViewById(R.id.text_show_date)
-        time = view.findViewById(R.id.text_show_time)
-
-        //date.text = intent
+        dateTV = view.findViewById(R.id.text_show_date)
+        timeTV = view.findViewById(R.id.text_show_time)
 
         glikemiaCheck = view.findViewById(R.id.CB_glikemia)
         insulinCheck = view.findViewById(R.id.CB_insulin)
@@ -133,11 +138,6 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
         spinnerMed.onItemSelectedListener = this
         listMed = appViewModel.getNamesOfMeds()
         (listMed as MutableList<String>).plusAssign("inny")
-
-
-
-
-
 
 
         // spinner insulin
@@ -184,11 +184,15 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
             val month = c.get(Calendar.MONTH)
             val day = c.get(Calendar.DAY_OF_MONTH)
 
-
-            choserDate = DatePickerDialog(context,DatePickerDialog.OnDateSetListener { view, y, m, d -> date.text="$d.${m+1}.$y" },year, month, day )
+            choserDate = DatePickerDialog(context,DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                chosenYear = y -1900
+                chosenMonth = m
+                chosenDay = d
+                val date = Date(y-1900,m,d)
+                dateTV.text= formatter.format(date).substring(0,11) },year, month, day )
             choserDate.show()
-        }
 
+        }
 
         timePicker.setOnClickListener {
 
@@ -198,19 +202,19 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
            // if(minute.length == 1) (minute = "0" + minute)
             //selectedTime = Calendar.getInstance().get(Calendar.HOUR_OF_DAY).toString()+ "." +  Calendar.getInstance().get(Calendar.MINUTE).toString()
             //selectedTime = hour + "." + minute
-            if (minute<10) choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { _, h, m -> time.text="$h:0$m" }), hour, minute,true)
-            else choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { _, h, m -> time.text="$h:$m" }), hour, minute,true)
+            choserTime = TimePickerDialog(context, TimePickerDialog.OnTimeSetListener(function= { _, h, m ->
+                chosenMinute = m
+                chosenHour = h
+                val ddd = Date(chosenYear, chosenMonth, chosenDay, chosenHour, chosenMinute)
+                timeTV.text=formatter.format(ddd).substring(11,16)}), hour, minute,true)
             choserTime.show()
-
-            ///var inputTypeInsulin = spinnerInsulin.selectedItem.toString()
-            //Toast.makeText(context, "$inputTypeInsulin", Toast.LENGTH_SHORT).show()
         }
 
         save.setOnClickListener {
             if(glikemiaCheck.isChecked){
                 var amountG = inputGlikemia.text.toString().toDouble()
                 if(inputGlikemia.text.isNotEmpty()) {
-                    createGlikemiaEntity(amountG, date.text.toString(), time.text.toString())
+                    //createGlikemiaEntity(amountG, date.text.toString(), time.text.toString())
                     // Toast.makeText(context, "$amountG amou", Toast.LENGTH_SHORT).show()
 
                 }
@@ -222,7 +226,7 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 var typeI = spinnerInsulin.selectedItem.toString()
                 var amountI = inputInsulin.text.toString().toDouble()
                 if(inputInsulin.text.isNotEmpty()){
-                    createInsulinEntity(amountI, typeI, date.text.toString(), time.text.toString())
+                    createInsulinEntity(amountI, typeI, dateTV.text.toString(), timeTV.text.toString())
                     Toast.makeText(context, "$amountI amou", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -234,7 +238,7 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 var pulse = inputPulse.text.toString().toInt()
 
                 if(inputSystolic.text.isNotEmpty() && inputDiastolic.text.isNotEmpty() && inputPulse.text.isNotEmpty()){
-                    createPressureEntity(levelSystolic, levelDiastolic, pulse, date.text.toString(), time.text.toString())
+                    createPressureEntity(levelSystolic, levelDiastolic, pulse, dateTV.text.toString(), timeTV.text.toString())
                     //Toast.makeText(context, "$levelDiastolic amou", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -243,7 +247,7 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 if(inputDoseMed.text.isNotEmpty()) {
                     medDose = inputDoseMed.text.toString().toDouble()
                     if(inputNameMed.isVisible) medName = inputNameMed.text.toString()
-                    createMedicineEntity(medName, medDose, date.text.toString(), time.text.toString())
+                    createMedicineEntity(medName, medDose, dateTV.text.toString(), timeTV.text.toString())
                     //Toast.makeText(context, medName+medDose, Toast.LENGTH_SHORT).show()
                 }
 
@@ -340,18 +344,18 @@ class AddMeasurementFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
 
-    fun createGlikemiaEntity(amount: Double, date: String, time: String){
-        val amount = amount
-        val date = date
-        val time = time
-        val uuid: UUID = UUID.randomUUID()
-        val id1: Long = uuid.mostSignificantBits
-        val id2: Long = uuid.leastSignificantBits
-        val item:GlikemiaEntity = GlikemiaEntity(id1,id2 ,amount, date, time)
-
-        appViewModel.insertGlikemia(item)
-
-    }
+//    fun createGlikemiaEntity(amount: Double, date: String, time: String){
+//        val amount = amount
+//        val date = date
+//        val time = time
+//        val uuid: UUID = UUID.randomUUID()
+//        val id1: Long = uuid.mostSignificantBits
+//        val id2: Long = uuid.leastSignificantBits
+//        //val item:GlikemiaEntity = GlikemiaEntity(id1,id2 ,amount, date, time)
+//        val item:GlikemiaEntity = GlikemiaEntity(id1,id2 ,amount, date)
+//        appViewModel.insertGlikemia(item)
+//
+//    }
 
     fun createInsulinEntity(amount: Double, type: String, date: String, time: String){
         val amount = amount

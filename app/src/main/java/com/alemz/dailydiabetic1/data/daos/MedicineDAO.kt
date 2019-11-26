@@ -9,13 +9,13 @@ import java.lang.reflect.Array
 
 interface MedicineDAO {
 
-    @Query("SELECT * FROM medicine")
+    @Query("SELECT * FROM medicine ORDER BY date")
     fun getAll(): LiveData<List<MedicineEntity>>
 
-    @Query("SELECT * FROM medicine WHERE date LIKE :date")
+    @Query("SELECT * FROM medicine WHERE date LIKE :date ORDER BY date")
     fun findByDate(date: String): LiveData<List<MedicineEntity>>
 
-    @Query("SELECT * FROM medicine WHERE medicine_name LIKE :medicine")
+    @Query("SELECT * FROM medicine WHERE medicine_name LIKE :medicine ORDER BY date")
     fun findByName(medicine: String): LiveData<List<MedicineEntity>>
 
     @Query("SELECT DISTINCT medicine_name FROM medicine")

@@ -18,7 +18,7 @@ class MedAdapter: RecyclerView.Adapter<MedAdapter.MedHolder>()  {
 
     override fun onBindViewHolder(holder: MedHolder, position: Int) {
         val currentMed = list[position]
-        holder.time.text = currentMed.time
+        holder.time.text = currentMed.date.substring(11,16)
         holder.name.text = currentMed.medicine_name
         holder.dose.text = currentMed.dose.toString()
     }

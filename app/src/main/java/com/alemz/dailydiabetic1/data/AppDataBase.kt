@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.alemz.dailydiabetic1.data.daos.*
 import com.alemz.dailydiabetic1.data.entities.*

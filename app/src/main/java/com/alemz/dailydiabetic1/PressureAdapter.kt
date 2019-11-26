@@ -22,7 +22,7 @@ class PressureAdapter: RecyclerView.Adapter<PressureAdapter.PressureHolder>() {
 
     override fun onBindViewHolder(holder: PressureHolder, position: Int) {
         val currentPressure = list[position]
-        holder.time.text = currentPressure.time
+        holder.time.text = currentPressure.date.substring(11,16)
         holder.pressure.text = currentPressure.level_systolic.toString()+" / "+ currentPressure.level_diastolic.toString()
         holder.pulse.text = currentPressure.pulse.toString()
     }

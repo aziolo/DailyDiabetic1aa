@@ -4,9 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Profile")
+@Entity(tableName = "Profile", primaryKeys = arrayOf("id1", "id2"))
 data class ProfileEntity(
-    @PrimaryKey val id1: Long, val id2: Long,
+    @ColumnInfo(name = "id1") val id1: Long,
+    @ColumnInfo(name = "id2")val id2: Long,
     @ColumnInfo(name = "first_name") var first_name: String,
     @ColumnInfo(name = "last_name") var last_name: String,
     @ColumnInfo(name = "email") var email: String,

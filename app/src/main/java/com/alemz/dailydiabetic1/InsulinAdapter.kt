@@ -18,7 +18,7 @@ class InsulinAdapter: RecyclerView.Adapter<InsulinAdapter.InsulinHolder>() {
 
     override fun onBindViewHolder(holder: InsulinHolder, position: Int) {
         val currentInsulin = list[position]
-        holder.time.text = currentInsulin.time
+        holder.time.text = currentInsulin.date.substring(11,16)
         holder.amount.text = currentInsulin.amount.toString()
         holder.type.text = currentInsulin.type
     }

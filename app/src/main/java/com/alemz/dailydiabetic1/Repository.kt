@@ -9,6 +9,7 @@ import com.alemz.dailydiabetic1.data.entities.*
 import kotlinx.android.synthetic.main.fragment_add_measurement.view.*
 import java.lang.reflect.Array
 import com.alemz.dailydiabetic1.data.entities.MedicineEntity
+import java.util.*
 
 
 class Repository(application: Application) {
@@ -20,6 +21,8 @@ class Repository(application: Application) {
 
     private var insulinDao: InsulinDAO
     private var allInsulin: LiveData<List<InsulinEntity>>
+    private var settleInsulin: LiveData<List<InsulinEntity>>
+    private var foodInsulin: LiveData<List<InsulinEntity>>
 
     private var medicineDao: MedicineDAO
     private var allMedicine: LiveData<List<MedicineEntity>>
@@ -42,6 +45,8 @@ class Repository(application: Application) {
 
         insulinDao = db.insulinDAO()
         allInsulin = insulinDao.getAll()
+        settleInsulin = insulinDao.getAllSettle()
+        foodInsulin = insulinDao.getAllFood()
 
         medicineDao = db.medicineDAO()
         allMedicine = medicineDao.getAll()
@@ -63,6 +68,12 @@ class Repository(application: Application) {
         return allPressure
     }
     fun getAllInsulin(): LiveData<List<InsulinEntity>> {
+        return allInsulin
+    }
+    fun getSettleInsulin(): LiveData<List<InsulinEntity>> {
+        return allInsulin
+    }
+    fun getFoodInsulin(): LiveData<List<InsulinEntity>> {
         return allInsulin
     }
     fun getProfil(): LiveData<List<ProfileEntity>>{
@@ -126,7 +137,7 @@ class Repository(application: Application) {
         val list = GetBPForChosenDateAsyncTask(d,dao).execute(d).get()
         return list
     }
-    fun getGlikemiaForChosenDate(d:String) :LiveData<List<GlikemiaEntity>>{
+    fun getGlikemiaForChosenDate(d: String) :LiveData<List<GlikemiaEntity>>{
         val dao = glikemiaDao
         val list = GetGlikemiaForChosenDateAsyncTask(d,dao).execute(d).get()
         return list
@@ -155,6 +166,18 @@ class Repository(application: Application) {
 
         return list
     }
+    fun sumAllFood(d: String): Double{
+        val dao = insulinDao
+        val list = SumAllFoodForChosenDateAsyncTask(d,dao).execute(d).get()
+        return list
+    }
+
+
+    fun sumAllSettle(d: String): Double{
+        val dao = insulinDao
+        val list = SumAllSettleForChosenDateAsyncTask(d,dao).execute(d).get()
+        return list
+    }
 
 
 
@@ -164,9 +187,9 @@ class Repository(application: Application) {
     // ASYNC TASKS get for chosen date
     private class GetGlikemiaForChosenDateAsyncTask(d: String, dao: GlikemiaDAO): AsyncTask<String, Unit,LiveData<List<GlikemiaEntity>>>() {
         val dao = dao
-        val d = d
+        val check = d
         override fun doInBackground(vararg params: String?): LiveData<List<GlikemiaEntity>> {
-            return dao.findByDate(d)
+            return dao.findByDate(check)
         }
     }
     private class GetBPForChosenDateAsyncTask(d: String, dao: PressureDAO): AsyncTask<String, Unit,LiveData<List<PressureEntity>>>() {
@@ -205,6 +228,20 @@ class Repository(application: Application) {
             return dao.findNamesOfMeds()
         }
 
+    }
+    private class SumAllFoodForChosenDateAsyncTask(d: String, dao: InsulinDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = d
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.sumAllFood(d)
+        }
+    }
+    private class SumAllSettleForChosenDateAsyncTask(d: String, dao: InsulinDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = d
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.sumAllSettle(d)
+        }
     }
 
 

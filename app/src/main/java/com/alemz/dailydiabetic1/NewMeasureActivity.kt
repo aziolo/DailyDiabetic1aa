@@ -19,9 +19,7 @@ import com.alemz.dailydiabetic1.view.CalendarFragment
  class NewMeasureActivity : AppCompatActivity(), AddMeasurementFragment.OnFragmentInteractionListener {
      private lateinit var dateText: TextView
      private lateinit var timeText: TextView
-     private lateinit var date: String
-     private lateinit var time: String
-     private lateinit var list: ArrayList<String>
+     private lateinit var selectedTime: String
      override fun onFragmentInteraction(uri: Uri) {
          TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
      }
@@ -38,17 +36,12 @@ import com.alemz.dailydiabetic1.view.CalendarFragment
         // actionBar.setDisplayHomeAsUpEnabled(true)
          //actionBar.setDisplayShowHomeEnabled(true)
 
+         selectedTime = intent.getStringExtra("selectedTime")
+         Toast.makeText(this, selectedTime, Toast.LENGTH_SHORT).show()
          dateText = findViewById(R.id.text_show_date)
          timeText = findViewById(R.id.text_show_time)
-         list = intent.getStringArrayListExtra("lista")
-         timeText.text = list[1]
-         dateText.text = list[0]
-
-
-
-         Toast.makeText(this, " ${list.size}", Toast.LENGTH_SHORT).show()
-
-
+         dateText.text = selectedTime.substring(0,10)
+         timeText.text = selectedTime.substring(11,16)
 
     }
 
@@ -73,34 +66,4 @@ import com.alemz.dailydiabetic1.view.CalendarFragment
 
          return super.onCreateOptionsMenu(menu)
      }
-//     fun onCheckBoxClicked(view: View){
-//         if(view is CheckBox){
-//             val checked: Boolean = view.isChecked
-//
-//             when(view.id){
-//                 R.id.glikemia_chech_box ->{
-//                     if(checked){
-//                         params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-//                         //invalidateOptionsMenu()
-//
-//                     }
-//                     else{
-//                         params.height =(0)
-//                         invalidateOptionsMenu()
-//                     }
-//                     vg.invalidate()
-//                 }
-//
-//                 R.id.pressure_check_box ->{
-//                     if(checked){
-//
-//
-//                     }
-//                     else{
-//
-//                     }
-//                 }
-//             }
-//         }
-//     }
 }
