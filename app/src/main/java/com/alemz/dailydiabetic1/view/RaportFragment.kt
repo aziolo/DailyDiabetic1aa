@@ -608,6 +608,8 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
 
         val groupSpace = 0.06f
         val barSpace = 0.02f
+
+        
         data.barWidth = 0.4f
         //data.groupBars(0f, groupSpace, barSpace) // start at x = 0
 
