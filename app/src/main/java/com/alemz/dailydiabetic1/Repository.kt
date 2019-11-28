@@ -166,17 +166,23 @@ class Repository(application: Application) {
 
         return list
     }
+
+
+    //statistic
     fun sumAllFood(d: String): Double{
         val dao = insulinDao
         val list = SumAllFoodForChosenDateAsyncTask(d,dao).execute(d).get()
         return list
     }
-
-
     fun sumAllSettle(d: String): Double{
         val dao = insulinDao
         val list = SumAllSettleForChosenDateAsyncTask(d,dao).execute(d).get()
         return list
+    }
+    fun showMedianPerHourForThisMonth(d: String): Double {
+        val dao = glikemiaDao
+        val median = ShowMedianPerHourForThisMonthAsyncTask(d, dao).execute(d).get()
+        return median
     }
 
 
@@ -229,6 +235,8 @@ class Repository(application: Application) {
         }
 
     }
+
+    // Async task- statistic
     private class SumAllFoodForChosenDateAsyncTask(d: String, dao: InsulinDAO): AsyncTask<String, Unit, Double>(){
         val dao = dao
         val d = d
@@ -241,6 +249,14 @@ class Repository(application: Application) {
         val d = d
         override fun doInBackground(vararg params: String?): Double {
             return dao.sumAllSettle(d)
+        }
+    }
+
+    private class ShowMedianPerHourForThisMonthAsyncTask(d:String, dao:GlikemiaDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = d
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.showMedianPerHourForThisMonth(d)
         }
     }
 

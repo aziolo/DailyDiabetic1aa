@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.alemz.dailydiabetic1.data.entities.*
-import java.util.*
 
 class AppViewModel(application: Application): AndroidViewModel(application) {
     //private var date = Calendar.getInstance().toString()
@@ -41,40 +40,39 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
         return allMedicines
     }
     fun getNamesOfMeds(): List<String>{
-        val list = repository.findNamesOfMeds()
-        return list
+        return repository.findNamesOfMeds()
     }
 
 
 
     //GET FOR CHOSEN DATE
     fun getGlikemiaForChosenDate(d:String): LiveData<List<GlikemiaEntity>>{
-        val list = repository.getGlikemiaForChosenDate(d)
-        return list
+        return repository.getGlikemiaForChosenDate(d)
     }
     fun getBPForChosenDate(d:String):LiveData<List<PressureEntity>>{
-        val list = repository.getBPForChosenDate(d)
-        return list
+        return repository.getBPForChosenDate(d)
     }
     fun getInsulinForChosenDate(d: String):LiveData<List<InsulinEntity>>{
-        val list = repository.getInsulinForChosenDate(d)
-        return list
+        return repository.getInsulinForChosenDate(d)
+
     }
     fun getOneProfile(id: String): ProfileEntity{
-        val profil = repository.getOneProfil(id)
-        return profil
+        return repository.getOneProfil(id)
     }
     fun getMedForChosenDate(d:String): LiveData<List<MedicineEntity>>{
-        val list = repository.getMedForChosenDate(d)
-        return list
+        return repository.getMedForChosenDate(d)
     }
+
+    //SHOW STATISTIC
+
     fun sumAllSettleInsulinForChosenDate(d: String): Double{
-        val list = repository.sumAllSettle(d)
-        return list
+        return  repository.sumAllSettle(d)
     }
     fun sumAllFoodInsulinForChosenDate(d: String): Double{
-        val list = repository.sumAllFood(d)
-        return list
+        return  repository.sumAllFood(d)
+    }
+    fun showMedianPerHourForThisMonth(d: String): Double{
+        return  repository.showMedianPerHourForThisMonth(d)
     }
 
     //INSERT

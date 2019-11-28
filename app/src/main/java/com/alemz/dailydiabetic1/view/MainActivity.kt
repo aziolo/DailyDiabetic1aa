@@ -75,23 +75,36 @@ class MainActivity : AppCompatActivity(), FirstFragment.OnFragmentInteractionLis
 //
 //        }
 
-        appViewModel.insertGlikemia(GlikemiaEntity(2,1,120.0,parsedDate, "12:11"))
-        appViewModel.insertGlikemia(GlikemiaEntity(8,1,90.0,formatter.format(Date(2019-1900,11-1,25)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(9,1,130.0,formatter.format(Date(2019-1900,10-1,21)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(10,1,140.0,formatter.format(Date(2019-1900,10-1,22)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(11,1,150.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(2,1,100.0,parsedDate, "12:11"))
+        appViewModel.insertGlikemia(GlikemiaEntity(8,1,900.0,formatter.format(Date(2019-1900,11-1,25)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(9,1,104.0,formatter.format(Date(2019-1900,10-1,21)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(10,1,108.0,formatter.format(Date(2019-1900,10-1,22)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(11,1,100.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
 
-        appViewModel.insertGlikemia(GlikemiaEntity(3,1,130.0,formatter.format(Date(2019-1900,9-1,21)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(4,1,140.0,formatter.format(Date(2019-1900,9-1,22)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(5,1,110.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(6,1,160.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(7,1,170.0,formatter.format(Date(2019-1900,11-1,24)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(3,1,80.0,formatter.format(Date(2019-1900,9-1,21)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(4,1,30.0,formatter.format(Date(2019-1900,9-1,22)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(5,1,30.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(6,1,102.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(7,1,111.0,formatter.format(Date(2019-1900,11-1,24)), "13,12,0"))
 
         appViewModel.insertGlikemia(GlikemiaEntity(1,2,100.0,formatter.format(Date(2019-1900,11-1,21)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(2,2,190.0,formatter.format(Date(2019-1900,11-1,22)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(3,2,99.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(4,2,210.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
-        appViewModel.insertGlikemia(GlikemiaEntity(5,2,115.0,formatter.format(Date(2019-1900,11-1,24)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(2,2,90.0,formatter.format(Date(2019-1900,11-1,22)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(3,2,90.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(4,2,120.0,formatter.format(Date(2019-1900,11-1,23)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(5,2,106.0,formatter.format(Date(2019-1900,11-1,24)), "13,12,0"))
+
+////
+        appViewModel.insertGlikemia(GlikemiaEntity(8,2,80.0,formatter.format(Date(2019-1900,9-1,21, 2,2)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(9,2,103.0,formatter.format(Date(2019-1900,9-1,22,3,3)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(10,2,83.0,formatter.format(Date(2019-1900,11-1,23, 4,4)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(11,2,92.0,formatter.format(Date(2019-1900,11-1,23, 5,5)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(12,2,111.0,formatter.format(Date(2019-1900,11-1,24,6,6)), "13,12,0"))
+
+        appViewModel.insertGlikemia(GlikemiaEntity(13,2,100.0,formatter.format(Date(2019-1900,11-1,21,7,7)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(14,2,90.0,formatter.format(Date(2019-1900,11-1,22,8,8)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(15,2,90.0,formatter.format(Date(2019-1900,11-1,23,9,9)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(16,2,120.0,formatter.format(Date(2019-1900,11-1,23,13,13)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(17,2,110.0,formatter.format(Date(2019-1900,11-1,24,18,18)), "13,12,0"))
 
 
         appViewModel.insertBP(PressureEntity(1,1,120,80,70, "2019-11-09 12:11:00", "11:53"))

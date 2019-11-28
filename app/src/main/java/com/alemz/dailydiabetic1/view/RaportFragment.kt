@@ -68,6 +68,8 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
     val appViewModel: AppViewModel by lazy{ ViewModelProviders.of(this).get(AppViewModel::class.java)}
     private val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     private val formMonth = SimpleDateFormat("yyyy-MM")
+    private val statisticFormatter = SimpleDateFormat("yyyy-MM HH")
+
     private  val months = listOf("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień","Wrzesień", "Październik","Listopad","Grudzień")
     private lateinit var currentMonth: String
     private var countDaysInMounth = 0
@@ -106,8 +108,9 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         val t = view.findViewById<TextView>(R.id.texhahaha)
 
 
-        //Toast.makeText(context, calendar.minDate.toString(), Toast.LENGTH_LONG)
         val c = Calendar.getInstance()
+
+        //start state
         currentMonth = "%"+formMonth.format(c.time)+"%"
         countDaysInMounth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
         monthTxt.text = months[c.get(Calendar.MONTH)] +" "+ c.get(Calendar.YEAR).toString()
@@ -115,7 +118,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         cvi.isVisible = false
         cvg.isVisible = true
 
-        drawChartGlikemia(view)
+        drawChartGlikemiaBetter(view)
         drawChartBP(view)
         drawSecondInsulin(view)
 
@@ -129,10 +132,11 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
             currentMonth = "%"+formMonth.format(c.time)+"%"
             countDaysInMounth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
             drawChartBP(view)
-            drawChartGlikemia(view)
+            drawChartGlikemiaBetter(view)
             //drawChartInsulin(view)
             drawSecondInsulin(view)
         }
+
         previous.setOnClickListener {
             c.add(Calendar.MONTH, -1)
             val date = c.time
@@ -142,7 +146,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
             currentMonth = "%"+formMonth.format(c.time)+"%"
             countDaysInMounth = c.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-            drawChartGlikemia(view)
+            drawChartGlikemiaBetter(view)
             drawChartBP(view)
            // drawChartInsulin(view)
             drawSecondInsulin(view)
@@ -249,6 +253,8 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
             //axis
             var xAxis = chartBP.xAxis
             var yAxis = chartBP.axisLeft
+            val vAR = chartBP.axisRight
+            vAR.isEnabled = false
 
             xAxis.position = XAxisPosition.BOTTOM
             xAxis.setDrawAxisLine(true)
@@ -347,6 +353,8 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
             //axis
             val xAxis = chartG.xAxis
             val yAxis = chartG.axisLeft
+            val vAR = chartG.axisRight
+            vAR.isEnabled = false
             xAxis.position = XAxisPosition.BOTTOM
             xAxis.labelCount = countDaysInMounth
             xAxis.mAxisMaximum = countDaysInMounth.toFloat()
@@ -543,6 +551,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         val entriesSettle: ArrayList<BarEntry> = ArrayList()
         val entriesFood: ArrayList<BarEntry> = ArrayList()
         val entries2 = java.util.ArrayList<BarEntry>()
+
         // creates Entries
         for (i in 0 ..  countDaysInMounth){
             var d: String = ""
@@ -563,7 +572,6 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
 
 
         // stacked
-
         val settleDataSet = BarDataSet(entriesSettle, "korekta")
         val foodDataSet = BarDataSet(entriesFood, "okołoposiłkowa")
 
@@ -577,28 +585,32 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         set2.valueTextSize = 10f
         set2.axisDependency = YAxis.AxisDependency.LEFT
 
-        settleDataSet.axisDependency = YAxis.AxisDependency.LEFT
-        settleDataSet.color = Color.rgb(55, 99, 190)
-        settleDataSet.setDrawValues(false)
-        settleDataSet.valueTextSize = 10f
-        settleDataSet.valueTextColor = Color.rgb(55, 99, 190)
-
-        foodDataSet.axisDependency = YAxis.AxisDependency.LEFT
-        foodDataSet.color = Color.rgb(61, 165, 255)
-        foodDataSet.setDrawValues(false)
-        foodDataSet.valueTextSize = 10f
-        //foodDataSet.formSize = 100000000000000000f
-        foodDataSet.valueTextColor = Color.rgb(61, 165, 255)
+//        settleDataSet.axisDependency = YAxis.AxisDependency.LEFT
+//        settleDataSet.color = Color.rgb(55, 99, 190)
+//        settleDataSet.setDrawValues(false)
+//        settleDataSet.valueTextSize = 10f
+//        settleDataSet.valueTextColor = Color.rgb(55, 99, 190)
+//
+//        foodDataSet.axisDependency = YAxis.AxisDependency.LEFT
+//        foodDataSet.color = Color.rgb(61, 165, 255)
+//        foodDataSet.setDrawValues(false)
+//        foodDataSet.valueTextSize = 10f
+//        //foodDataSet.formSize = 100000000000000000f
+//        foodDataSet.valueTextColor = Color.rgb(61, 165, 255)
 
         //axis
         var xAxis = chartI.xAxis
         var yAxis = chartI.axisLeft
+        val vAR = chartI.axisRight
+        vAR.isEnabled = false
 
         xAxis.position = XAxisPosition.BOTTOM
         xAxis.setDrawAxisLine(true)
         xAxis.axisMinimum = 0f
+
         yAxis.axisMinimum = 0f
         yAxis.setDrawAxisLine(true)
+
 
 
         val data = BarData()
@@ -609,7 +621,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         val groupSpace = 0.06f
         val barSpace = 0.02f
 
-        
+
         data.barWidth = 0.4f
         //data.groupBars(0f, groupSpace, barSpace) // start at x = 0
 
@@ -623,10 +635,229 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
 
     }
 
+    private fun drawChartGlikemiaBetter(view: View) {
+        chartG = view.findViewById(R.id.glikemiaChart)
+
+        val entriesMedian: ArrayList<Entry> = ArrayList()
+        val entries90: ArrayList<Entry> = ArrayList()
+        val entries75: ArrayList<Entry> = ArrayList()
+        val entries25: ArrayList<Entry> = ArrayList()
+        val entries10: ArrayList<Entry> = ArrayList()
+        val glikemiaData = LineData()
+        var currentHour = ""
+        var previous = ""
+        var next = ""
+        // creates Entries
+        for (i in 0 ..  23){
+            if ( i == 0){
+                currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
+                next = currentMonth.substring(0,8)+ "% 0" + (i+1).toString() + "%"
+                previous = currentMonth.substring(0,8)+ "% 0" + (i).toString() + "%"
+
+            }
+            if (i in 2..9) {
+                currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
+                next = currentMonth.substring(0,8)+ "% 0" + (i+1).toString() + "%"
+                previous = currentMonth.substring(0,8)+ "% 0" + (i-1).toString() + "%"
+
+            }
+            if (i == 10) {
+                currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
+                next = currentMonth.substring(0,8)+ "% " + (i+1).toString() + "%"
+                previous = currentMonth.substring(0,8)+ "% 0" + (i-1).toString() + "%"
+
+            }
+            if (i > 10){
+                currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
+                next = currentMonth.substring(0,8)+ "% " + (i+1).toString() + "%"
+                previous = currentMonth.substring(0,8)+ "% " + (i-1).toString() + "%"
+
+            }
+
+            var medianPerHour = appViewModel.showMedianPerHourForThisMonth(currentHour)
+            if (medianPerHour == 0.0) medianPerHour = 0.5 * (appViewModel.showMedianPerHourForThisMonth(previous)+ appViewModel.showMedianPerHourForThisMonth(next))
+
+            val hour = i.toFloat()
+            entriesMedian.add(i, Entry(hour, medianPerHour.toFloat()))
+            entries90.add(i, Entry(hour, (medianPerHour*1.8).toFloat()))
+            entries75.add(i, Entry(hour, (medianPerHour*1.5).toFloat()))
+            entries25.add(i, Entry(hour, (medianPerHour*0.5).toFloat()))
+            entries10.add(i, Entry(hour, (medianPerHour*0.2).toFloat()))
+        }
+
+        val setMedian = LineDataSet(entriesMedian, "mediana 50%")
+        val set90 = LineDataSet(entries90, "90%")
+        val set75 = LineDataSet(entries75, "75%")
+        val set25 = LineDataSet(entries25, "25%")
+        val set10 = LineDataSet(entries10, "10%")
+
+        setMedian.axisDependency = YAxis.AxisDependency.LEFT
+        setMedian.color = Color.rgb(55, 99, 190)
+        setMedian.setCircleColor(Color.rgb(55, 99, 190))
+        setMedian.setDrawCircles(false)
+        setMedian.lineWidth = 2.5f
+        setMedian.setDrawCircleHole(false)
+        setMedian.mode = LineDataSet.Mode.CUBIC_BEZIER
+        setMedian.setDrawValues(false)
+        setMedian.valueTextSize = 10f
+        setMedian.valueTextColor = Color.rgb(55, 99, 190)
+
+        set90.axisDependency = YAxis.AxisDependency.LEFT
+        set90.color = Color.rgb(55, 99, 190)
+        set90.setCircleColor(Color.rgb(55, 99, 190))
+        set90.setDrawCircles(false)
+        set90.lineWidth = 0f
+        set90.setDrawCircleHole(false)
+        set90.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set90.setDrawValues(false)
+        set90.fillAlpha = 255
+        set90.setDrawFilled(true)
+        set90.fillColor = Color.WHITE
+        set90.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
+            // change the return value here to better understand the effect
+            // return 0;
+            chartG.getAxisLeft().getAxisMaximum()
+        })
+
+        set75.axisDependency = YAxis.AxisDependency.LEFT
+        set75.color = Color.rgb(55, 99, 190)
+        set75.setCircleColor(Color.rgb(55, 99, 190))
+        set75.setDrawCircles(false)
+        set75.lineWidth = 0f
+        set75.setDrawCircleHole(false)
+        set75.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set75.setDrawValues(false)
+        set75.fillAlpha = 100
+        set75.setDrawFilled(true)
+        set75.fillColor = Color.WHITE
+        set75.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
+            // change the return value here to better understand the effect
+            // return 0;
+            chartG.getAxisLeft().getAxisMaximum()
+        })
+
+
+        set25.axisDependency = YAxis.AxisDependency.LEFT
+        set25.color = Color.rgb(55, 99, 190)
+        set25.setCircleColor(Color.rgb(55, 99, 190))
+        set25.setDrawCircles(false)
+        set25.lineWidth = 0f
+        set25.setDrawCircleHole(false)
+        set25.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set25.setDrawValues(false)
+        set25.fillAlpha = 100
+        set25.setDrawFilled(true)
+        set25.fillColor = Color.WHITE
+        set25.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
+            // change the return value here to better understand the effect
+            // return 600;
+            chartG.getAxisLeft().getAxisMinimum()
+        })
 
 
 
 
+        set10.axisDependency = YAxis.AxisDependency.LEFT
+        set10.color = Color.rgb(55, 99, 190)
+        set10.setCircleColor(Color.rgb(55, 99, 190))
+        set10.setDrawCircles(false)
+        set10.lineWidth = 0f
+        set10.setDrawCircleHole(false)
+        set10.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set10.setDrawValues(false)
+        set10.fillAlpha = 255
+        set10.setDrawFilled(true)
+        set10.fillColor = Color.WHITE
+        set10.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
+            chartG.getAxisLeft().getAxisMinimum()
+        })
+
+
+        //style
+        chartG.setBackgroundColor(Color.WHITE)
+        chartG.setGridBackgroundColor(Color.rgb(255, 175, 0))
+        chartG.setDrawGridBackground(true)
+        chartG.description.isEnabled = false
+        chartG.setTouchEnabled(true)
+        chartG.setDrawBorders(true)
+        chartG.isDragEnabled = true
+        chartG.setScaleEnabled(true)
+        chartG.setPinchZoom(true)
+
+        //legend
+        val lg = chartG.legend
+        lg.isWordWrapEnabled = false
+        lg.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        lg.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+        lg.orientation = Legend.LegendOrientation.HORIZONTAL
+        lg.setDrawInside(false)
+        // draw legend entries as lines
+        lg.form = LegendForm.LINE
+
+        val mv = MarkerViewStyle(context, R.layout.custom_marker_view)
+        mv.chartView = chartG
+        chartG.marker = mv
+
+
+        //Limit Lines
+        val highLevelG = LimitLine(126f, "niebezpieczne >125")
+        highLevelG.lineWidth = 2f
+        highLevelG.lineColor =Color.rgb(247,50,87)
+        highLevelG.enableDashedLine(10f, 10f, 0f)
+        highLevelG.labelPosition = LimitLabelPosition.RIGHT_TOP
+        highLevelG.textSize = 10f
+
+        val lowLevelG = LimitLine(100f, "ostrzeżenie >100")
+        lowLevelG.lineWidth = 2f
+        lowLevelG.lineColor =Color.rgb(230,100,63)
+        lowLevelG.enableDashedLine(10f, 10f, 0f)
+        lowLevelG.labelPosition = LimitLabelPosition.RIGHT_TOP
+        lowLevelG.textSize = 10f
+
+        //axis
+        val xAxis = chartG.xAxis
+        val yAxis = chartG.axisLeft
+        val vAR = chartG.axisRight
+        vAR.isEnabled = false
+        xAxis.position = XAxisPosition.BOTTOM
+        xAxis.labelCount = 8
+        xAxis.setDrawGridLinesBehindData(false)
+        yAxis.setDrawGridLinesBehindData(false)
+        xAxis.setDrawAxisLine(true)
+        yAxis.setDrawAxisLine(true)
+        yAxis.axisMinimum = 0f
+
+        //drawing x axis-format
+        xAxis.valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return if (value == 0f) "0" + value.toInt().toString() + ":00"
+                else value.toInt().toString()+":00"
+            }
+        }
+
+        // draw limit lines behind data instead of on top
+        yAxis.setDrawLimitLinesBehindData(false)
+        xAxis.setDrawLimitLinesBehindData(false)
+        // add limit lines
+        yAxis.addLimitLine(highLevelG)
+        yAxis.addLimitLine(lowLevelG)
+
+
+
+        glikemiaData.addDataSet(setMedian)
+        glikemiaData.addDataSet(set75)
+        glikemiaData.addDataSet(set25)
+        glikemiaData.addDataSet(set90)
+        glikemiaData.addDataSet(set10)
+        chartG.data = glikemiaData
+        chartG.invalidate()
+
+    }
+
+
+
+
+    class Values (value: Float, time: Float)
 
 
 
@@ -640,6 +871,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         listener?.onFragmentInteraction(uri)
     }
 
+    class Value(value: Float, time: Float)
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
