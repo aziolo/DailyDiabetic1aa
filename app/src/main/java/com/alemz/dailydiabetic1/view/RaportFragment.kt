@@ -276,147 +276,6 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
 
     }
 
-
-
-    private fun drawChartGlikemia(view: View) {
-
-        //style
-        chartG = view.findViewById(R.id.glikemiaChart)
-        chartG.setBackgroundColor(WHITE)
-        chartG.description.isEnabled = false
-        chartG.setTouchEnabled(true)
-        chartG.setDrawGridBackground(false)
-        chartG.setDrawBorders(true)
-        chartG.isDragEnabled = true
-        chartG.setScaleEnabled(true)
-        chartG.setPinchZoom(true)
-
-        //legend
-        val lg = chartG.legend
-        lg.isWordWrapEnabled = false
-        lg.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        lg.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
-        lg.orientation = Legend.LegendOrientation.HORIZONTAL
-        lg.setDrawInside(false)
-        // draw legend entries as lines
-        lg.form = LegendForm.LINE
-
-        val valuesG: ArrayList<Entry> = ArrayList()
-        val glikemiaData = LineData()
-
-        appViewModel.getGlikemiaForChosenDate(currentMonth).observe(this, Observer<List<GlikemiaEntity>> { t ->
-            val list = ArrayList(t)
-
-            for (i in 0 until list.size) {
-                val amount = list[i].amount.toFloat()
-                val date = formatter.parse(list[i].date).time
-
-                valuesG.add(Entry(date.toFloat(), amount))
-
-
-            }
-            val set1 = LineDataSet(valuesG, "glikemia")
-
-
-            // set the filled area
-            set1.setDrawFilled(true)
-            set1.fillFormatter =
-                IFillFormatter { _, _ -> chartG.axisLeft.axisMinimum }
-            if (Utils.getSDKInt() >= 18) { // drawables only supported on api level 18 and above
-                val drawable = ContextCompat.getDrawable(context!!, R.drawable.fade_red)
-                set1.fillDrawable = drawable
-            } else {
-                set1.fillColor = Color.BLACK
-            }
-
-
-            //set drawing style
-            set1.axisDependency = YAxis.AxisDependency.LEFT
-            set1.enableDashedLine(10f, 5f, 0f)
-            set1.color = Color.BLACK
-            set1.lineWidth = 1f
-            set1.setDrawCircleHole(false)
-            set1.setCircleColor(Color.BLACK)
-            set1.circleRadius = 3f
-            set1.setDrawCircleHole(false)
-
-            set1.mode = LineDataSet.Mode.LINEAR
-            set1.setDrawValues(true)
-            set1.valueTextSize = 10f
-            set1.valueTextColor = Color.rgb(0, 0, 0)
-
-            // customize legend entry
-            set1.formLineWidth = 1f
-            set1.formLineDashEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
-            set1.formSize = 15f
-
-            //axis
-            val xAxis = chartG.xAxis
-            val yAxis = chartG.axisLeft
-            val vAR = chartG.axisRight
-            vAR.isEnabled = false
-            xAxis.position = XAxisPosition.BOTTOM
-            xAxis.labelCount = countDaysInMounth
-            xAxis.mAxisMaximum = countDaysInMounth.toFloat()
-
-            xAxis.setDrawAxisLine(true)
-            yAxis.setDrawAxisLine(true)
-
-            //drawing x axis-format
-            xAxis.valueFormatter = object : ValueFormatter() {
-                override fun getFormattedValue(value: Float): String {
-
-                    var mDataFormat = SimpleDateFormat("dd")
-                    var mDate: Date
-                    val original = value.toLong()
-                    mDate = Date(original)
-                    return mDataFormat.format(mDate)
-                }
-            }
-
-            //marker
-            val mv = MarkerViewStyle(context, R.layout.custom_marker_view)
-            mv.chartView = chartG
-            chartG.marker = mv
-
-
-            //Limit Lines
-            val highLevelG = LimitLine(126f, "niebezpieczne >125")
-            highLevelG.lineWidth = 2f
-            highLevelG.lineColor =Color.rgb(247,50,87)
-            highLevelG.enableDashedLine(10f, 10f, 0f)
-            highLevelG.labelPosition = LimitLabelPosition.RIGHT_TOP
-            highLevelG.textSize = 10f
-
-            val lowLevelG = LimitLine(100f, "ostrzeżenie >100")
-            lowLevelG.lineWidth = 2f
-            lowLevelG.lineColor =Color.rgb(230,100,63)
-            lowLevelG.enableDashedLine(10f, 10f, 0f)
-            lowLevelG.labelPosition = LimitLabelPosition.RIGHT_TOP
-            lowLevelG.textSize = 10f
-
-
-            // draw limit lines behind data instead of on top
-            yAxis.setDrawLimitLinesBehindData(true)
-            xAxis.setDrawLimitLinesBehindData(true)
-            // add limit lines
-            yAxis.addLimitLine(highLevelG)
-            yAxis.addLimitLine(lowLevelG)
-            //xAxis.addLimitLine(llXAxis);
-
-
-            glikemiaData.addDataSet(set1)
-            chartG.data = glikemiaData
-            chartG.invalidate()
-
-        })
-
-
-
-
-    }
-
-
     private fun drawChartInsulin(view: View) {
 
         //style
@@ -645,50 +504,31 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         val entries10: ArrayList<Entry> = ArrayList()
         val glikemiaData = LineData()
         var currentHour = ""
-        var previous = ""
-        var next = ""
+
         // creates Entries
         for (i in 0 ..  23){
-            if ( i == 0){
-                currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
-                next = currentMonth.substring(0,8)+ "% 0" + (i+1).toString() + "%"
-                previous = currentMonth.substring(0,8)+ "% 0" + (i).toString() + "%"
-
-            }
-            if (i in 2..9) {
-                currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
-                next = currentMonth.substring(0,8)+ "% 0" + (i+1).toString() + "%"
-                previous = currentMonth.substring(0,8)+ "% 0" + (i-1).toString() + "%"
-
-            }
-            if (i == 10) {
-                currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
-                next = currentMonth.substring(0,8)+ "% " + (i+1).toString() + "%"
-                previous = currentMonth.substring(0,8)+ "% 0" + (i-1).toString() + "%"
-
-            }
-            if (i > 10){
-                currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
-                next = currentMonth.substring(0,8)+ "% " + (i+1).toString() + "%"
-                previous = currentMonth.substring(0,8)+ "% " + (i-1).toString() + "%"
-
-            }
-
-            var medianPerHour = appViewModel.showMedianPerHourForThisMonth(currentHour)
-            if (medianPerHour == 0.0) medianPerHour = 0.5 * (appViewModel.showMedianPerHourForThisMonth(previous)+ appViewModel.showMedianPerHourForThisMonth(next))
+            if ( i == 0) currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
+            if (i in 2..9) currentHour = currentMonth.substring(0,8)+ "% 0" + i.toString() + "%"
+            if (i == 10) currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
+            if (i > 10) currentHour = currentMonth.substring(0,8)+ "% " + i.toString() + "%"
 
             val hour = i.toFloat()
-            entriesMedian.add(i, Entry(hour, medianPerHour.toFloat()))
-            entries90.add(i, Entry(hour, (medianPerHour*1.8).toFloat()))
-            entries75.add(i, Entry(hour, (medianPerHour*1.5).toFloat()))
-            entries25.add(i, Entry(hour, (medianPerHour*0.5).toFloat()))
-            entries10.add(i, Entry(hour, (medianPerHour*0.2).toFloat()))
+            var medianPerHour = appViewModel.showMedianPerHourForThisMonth(currentHour)
+            if (medianPerHour != 0.0) {
+                entriesMedian.add(Entry(hour, medianPerHour.toFloat()))
+                entries90.add(Entry(hour, (medianPerHour*1.8).toFloat()))
+                entries10.add(Entry(hour, (medianPerHour*0.2).toFloat()))
+            }
+            var upperIQR = appViewModel.showIQRupper(currentHour)
+            if (upperIQR != 0.0) entries75.add(Entry(hour, (upperIQR).toFloat()))
+            var lowerIQR = appViewModel.showIQRlower(currentHour)
+            if (lowerIQR != 0.0) entries25.add(Entry(hour, (lowerIQR).toFloat()))
         }
 
         val setMedian = LineDataSet(entriesMedian, "mediana 50%")
         val set90 = LineDataSet(entries90, "90%")
-        val set75 = LineDataSet(entries75, "75%")
-        val set25 = LineDataSet(entries25, "25%")
+        val set75 = LineDataSet(entries75, "IQR75%")
+        val set25 = LineDataSet(entries25, "IQR25%")
         val set10 = LineDataSet(entries10, "10%")
 
         setMedian.axisDependency = YAxis.AxisDependency.LEFT
@@ -703,7 +543,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         setMedian.valueTextColor = Color.rgb(55, 99, 190)
 
         set90.axisDependency = YAxis.AxisDependency.LEFT
-        set90.color = Color.rgb(55, 99, 190)
+        set90.color = Color.RED
         set90.setCircleColor(Color.rgb(55, 99, 190))
         set90.setDrawCircles(false)
         set90.lineWidth = 0f
@@ -713,11 +553,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         set90.fillAlpha = 255
         set90.setDrawFilled(true)
         set90.fillColor = Color.WHITE
-        set90.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
-            // change the return value here to better understand the effect
-            // return 0;
-            chartG.getAxisLeft().getAxisMaximum()
-        })
+        set90.fillFormatter = IFillFormatter { _, _ ->chartG.axisLeft.axisMaximum }
 
         set75.axisDependency = YAxis.AxisDependency.LEFT
         set75.color = Color.rgb(55, 99, 190)
@@ -730,12 +566,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         set75.fillAlpha = 100
         set75.setDrawFilled(true)
         set75.fillColor = Color.WHITE
-        set75.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
-            // change the return value here to better understand the effect
-            // return 0;
-            chartG.getAxisLeft().getAxisMaximum()
-        })
-
+        set75.fillFormatter = IFillFormatter { _, _ ->chartG.axisLeft.axisMaximum }
 
         set25.axisDependency = YAxis.AxisDependency.LEFT
         set25.color = Color.rgb(55, 99, 190)
@@ -748,17 +579,11 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         set25.fillAlpha = 100
         set25.setDrawFilled(true)
         set25.fillColor = Color.WHITE
-        set25.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
-            // change the return value here to better understand the effect
-            // return 600;
-            chartG.getAxisLeft().getAxisMinimum()
-        })
-
-
+        set25.fillFormatter = IFillFormatter { _,_ ->chartG.axisLeft.axisMinimum }
 
 
         set10.axisDependency = YAxis.AxisDependency.LEFT
-        set10.color = Color.rgb(55, 99, 190)
+        set10.color = Color.RED
         set10.setCircleColor(Color.rgb(55, 99, 190))
         set10.setDrawCircles(false)
         set10.lineWidth = 0f
@@ -768,10 +593,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         set10.fillAlpha = 255
         set10.setDrawFilled(true)
         set10.fillColor = Color.WHITE
-        set10.setFillFormatter(IFillFormatter { dataSet, dataProvider ->
-            chartG.getAxisLeft().getAxisMinimum()
-        })
-
+        set10.fillFormatter = IFillFormatter { _,_ ->chartG.axisLeft.axisMinimum }
 
         //style
         chartG.setBackgroundColor(Color.WHITE)
@@ -827,6 +649,14 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         yAxis.setDrawAxisLine(true)
         yAxis.axisMinimum = 0f
 
+        // draw limit lines behind data instead of on top
+        yAxis.setDrawLimitLinesBehindData(false)
+        xAxis.setDrawLimitLinesBehindData(false)
+
+        // add limit lines
+        yAxis.addLimitLine(highLevelG)
+        yAxis.addLimitLine(lowLevelG)
+
         //drawing x axis-format
         xAxis.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {
@@ -835,15 +665,6 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
             }
         }
 
-        // draw limit lines behind data instead of on top
-        yAxis.setDrawLimitLinesBehindData(false)
-        xAxis.setDrawLimitLinesBehindData(false)
-        // add limit lines
-        yAxis.addLimitLine(highLevelG)
-        yAxis.addLimitLine(lowLevelG)
-
-
-
         glikemiaData.addDataSet(setMedian)
         glikemiaData.addDataSet(set75)
         glikemiaData.addDataSet(set25)
@@ -851,13 +672,7 @@ class RaportFragment : Fragment(), OnChartValueSelectedListener {
         glikemiaData.addDataSet(set10)
         chartG.data = glikemiaData
         chartG.invalidate()
-
     }
-
-
-
-
-    class Values (value: Float, time: Float)
 
 
 

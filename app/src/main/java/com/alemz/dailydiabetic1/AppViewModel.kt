@@ -64,7 +64,6 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     }
 
     //SHOW STATISTIC
-
     fun sumAllSettleInsulinForChosenDate(d: String): Double{
         return  repository.sumAllSettle(d)
     }
@@ -73,6 +72,12 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     }
     fun showMedianPerHourForThisMonth(d: String): Double{
         return  repository.showMedianPerHourForThisMonth(d)
+    }
+    fun showIQRlower(d: String): Double{
+        return repository.showMIQRlower(d)
+    }
+    fun showIQRupper(d: String): Double{
+        return repository.showIQRupper(d)
     }
 
     //INSERT

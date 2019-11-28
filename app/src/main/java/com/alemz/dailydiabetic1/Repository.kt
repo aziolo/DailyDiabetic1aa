@@ -184,6 +184,15 @@ class Repository(application: Application) {
         val median = ShowMedianPerHourForThisMonthAsyncTask(d, dao).execute(d).get()
         return median
     }
+    fun showIQRupper(date: String): Double{
+        val dao = glikemiaDao
+        return ShowIQRupperAsyncTask(date,dao).execute(date).get()
+    }
+
+    fun showMIQRlower(date: String): Double{
+        val dao = glikemiaDao
+        return ShowIQRlowerAsyncTask(date,dao).execute(date).get()
+    }
 
 
 
@@ -259,6 +268,25 @@ class Repository(application: Application) {
             return dao.showMedianPerHourForThisMonth(d)
         }
     }
+    private class ShowIQRlowerAsyncTask(d: String, dao: GlikemiaDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = d
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.showIQRlower(d)
+        }
+
+    }
+    private class ShowIQRupperAsyncTask(d: String, dao: GlikemiaDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = d
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.showIQRupper(d)
+        }
+
+    }
+
+
+
 
 
     //ASYNC TASKS insert

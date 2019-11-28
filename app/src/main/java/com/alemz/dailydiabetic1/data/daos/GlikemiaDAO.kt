@@ -17,6 +17,12 @@ interface GlikemiaDAO {
     @Query("SELECT avg(amount) FROM (SELECT amount FROM glikemia WHERE date LIKE :date ORDER BY amount LIMIT 2 - (SELECT count(amount) FROM glikemia WHERE date like:date) % 2 OFFSET (SELECT (count(*) - 1) / 2 FROM glikemia WHERE date like :date))")
     fun showMedianPerHourForThisMonth(date: String): Double
 
+    @Query("SELECT 0.75*(amount) FROM (SELECT amount FROM glikemia WHERE date LIKE :date ORDER BY amount LIMIT 2 - (SELECT count(amount) FROM glikemia WHERE date like:date) % 2 OFFSET (SELECT (count(*) - 1) / 2 FROM glikemia WHERE date like :date))")
+    fun showIQRupper(date: String): Double
+
+    @Query("SELECT 0.25*(amount) FROM (SELECT amount FROM glikemia WHERE date LIKE :date ORDER BY amount LIMIT 2 - (SELECT count(amount) FROM glikemia WHERE date like:date) % 2 OFFSET (SELECT (count(*) - 1) / 2 FROM glikemia WHERE date like :date))")
+    fun showIQRlower(date: String): Double
+
     @Insert
     fun insertAll(vararg glikemia: GlikemiaEntity)
 

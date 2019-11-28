@@ -105,7 +105,9 @@ class MainActivity : AppCompatActivity(), FirstFragment.OnFragmentInteractionLis
         appViewModel.insertGlikemia(GlikemiaEntity(15,2,90.0,formatter.format(Date(2019-1900,11-1,23,9,9)), "13,12,0"))
         appViewModel.insertGlikemia(GlikemiaEntity(16,2,120.0,formatter.format(Date(2019-1900,11-1,23,13,13)), "13,12,0"))
         appViewModel.insertGlikemia(GlikemiaEntity(17,2,110.0,formatter.format(Date(2019-1900,11-1,24,18,18)), "13,12,0"))
-
+        appViewModel.insertGlikemia(GlikemiaEntity(18,2,110.0,formatter.format(Date(2019-1900,11-1,24,6,18)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(19,2,176.0,formatter.format(Date(2019-1900,11-1,24,6,18)), "13,12,0"))
+        appViewModel.insertGlikemia(GlikemiaEntity(20,2,87.0,formatter.format(Date(2019-1900,11-1,24,23,18)), "13,12,0"))
 
         appViewModel.insertBP(PressureEntity(1,1,120,80,70, "2019-11-09 12:11:00", "11:53"))
         appViewModel.insertBP(PressureEntity(2,1,130,90,60, "2019-11-10 13:11:00", "11:54"))
