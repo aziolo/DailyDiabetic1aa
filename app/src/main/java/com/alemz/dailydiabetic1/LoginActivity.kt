@@ -28,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
 //        updateUI(currentUser)
     }
 
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
