@@ -1,10 +1,11 @@
-package com.alemz.dailydiabetic1
+package com.alemz.dailydiabetic1.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.alemz.dailydiabetic1.R
 import com.alemz.dailydiabetic1.data.entities.GlikemiaEntity
 
 class GlikemiaAdapter(): RecyclerView.Adapter<GlikemiaAdapter.GlikemiaHolder>() {
@@ -14,7 +15,7 @@ class GlikemiaAdapter(): RecyclerView.Adapter<GlikemiaAdapter.GlikemiaHolder>() 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GlikemiaAdapter.GlikemiaHolder {
+    ): GlikemiaHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_glikemia, parent, false)
         return GlikemiaHolder(itemView)
 

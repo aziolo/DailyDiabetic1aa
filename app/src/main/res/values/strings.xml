@@ -39,7 +39,13 @@
     <string name="med_name"> preparat</string>
     <string name="hint_med_name"> nazwa leku</string>
 
+    <string name="no_value">brak danych</string>
+    <string name="average">średnia(mg/dL)</string>
+    <string name="low_level">niski(&lt;70mg/dL)</string>
+    <string name="high_level">wysoki(&gt;180mg/dL)</string>
+    <string name="in_range">w normie(70-180mg/dL)</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

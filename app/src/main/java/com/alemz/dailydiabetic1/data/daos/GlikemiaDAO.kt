@@ -14,6 +14,16 @@ interface GlikemiaDAO {
     @Query("SELECT * FROM glikemia WHERE date LIKE :date ORDER BY date")
     fun findByDate(date: String): LiveData<List<GlikemiaEntity>>
 
+    @Insert
+    fun insertAll(vararg glikemia: GlikemiaEntity)
+
+    @Delete
+    fun delete(glikemia: GlikemiaEntity)
+
+    @Update
+    fun updateGlikemia(vararg glikemiaUpd: GlikemiaEntity)
+
+    //statystyka
     @Query("SELECT avg(amount) FROM (SELECT amount FROM glikemia WHERE date LIKE :date ORDER BY amount LIMIT 2 - (SELECT count(amount) FROM glikemia WHERE date like:date) % 2 OFFSET (SELECT (count(*) - 1) / 2 FROM glikemia WHERE date like :date))")
     fun showMedianPerHourForThisMonth(date: String): Double
 
@@ -23,12 +33,19 @@ interface GlikemiaDAO {
     @Query("SELECT 0.5*(amount) FROM (SELECT amount FROM glikemia WHERE date LIKE :date ORDER BY amount LIMIT 2 - (SELECT count(amount) FROM glikemia WHERE date like:date) % 2 OFFSET (SELECT (count(*) - 1) / 2 FROM glikemia WHERE date like :date))")
     fun showIQRlower(date: String): Double
 
-    @Insert
-    fun insertAll(vararg glikemia: GlikemiaEntity)
+    @Query("SELECT avg(amount) FROM glikemia WHERE date LIKE :date")
+    fun monthlyAverage(date: String): Double
 
-    @Delete
-    fun delete(glikemia: GlikemiaEntity)
+    @Query("SELECT count(amount) FROM glikemia WHERE date LIKE :date AND amount BETWEEN :low AND :high")
+    fun monthlyInDomain(date: String, low: String, high: String): Double
 
-    @Update
-    fun updateGlikemia(vararg glikemiaUpd: GlikemiaEntity)
+    @Query("SELECT count(amount) FROM glikemia WHERE date LIKE :date")
+    fun monthlyCountAll(date: String): Double
+    /// nie wiem co napisać
+
+    @Query("SELECT avg(amount) FROM glikemia WHERE date LIKE :date")
+    fun monthlyVariation(date: String): Double
+
+    @Query("SELECT avg(amount) FROM glikemia WHERE date LIKE :date")
+    fun monthlySTD(date: String): Double
 }

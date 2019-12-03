@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "619729371358",
+    "firebase_url": "https://dailydiabetic-57706.firebaseio.com",
+    "project_id": "dailydiabetic-57706",
+    "storage_bucket": "dailydiabetic-57706.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:619729371358:android:c220fb59b56106ccf5824f",
+        "android_client_info": {
+          "package_name": "com.alemz.dailydiabetic1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "619729371358-1niad3upq7f6kahspf2375bav1sudpvs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alemz.dailydiabetic1",
+            "certificate_hash": "cd54a4e60ac23d2c5657a71f4d6c036ac293bdf9"
+          }
+        },
+        {
+          "client_id": "619729371358-20r6p2goobinvkr07805s6c1oj80rqt6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_N9_xJQqBsYWo423zR96tXdknU4H6B8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "619729371358-20r6p2goobinvkr07805s6c1oj80rqt6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

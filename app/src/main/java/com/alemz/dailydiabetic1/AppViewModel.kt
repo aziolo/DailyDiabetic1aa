@@ -79,6 +79,15 @@ class AppViewModel(application: Application): AndroidViewModel(application) {
     fun showIQRupper(d: String): Double{
         return repository.showIQRupper(d)
     }
+    fun monthlyAverageGlikemia(d: String): Double{
+        return repository.monthlyAverage(d)
+    }
+    fun countInRageForThisMonth(d:String, low: String, high: String):Double {
+        return repository.monthlyInDomain(d, low, high)
+    }
+    fun countAllForThisMounth(date: String): Double{
+        return repository.monthlyCountAll(date)
+    }
 
     //INSERT
     fun insertGlikemia(glikemia: GlikemiaEntity){

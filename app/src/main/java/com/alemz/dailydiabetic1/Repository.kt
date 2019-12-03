@@ -193,8 +193,18 @@ class Repository(application: Application) {
         val dao = glikemiaDao
         return ShowIQRlowerAsyncTask(date,dao).execute(date).get()
     }
-
-
+    fun monthlyAverage(date: String): Double{
+        val dao= glikemiaDao
+        return MonthlyAverageAsyncTask(date, dao ).execute(date).get()
+    }
+    fun monthlyInDomain(date: String, low: String, high: String): Double{
+        val dao = glikemiaDao
+        return MonthlyInDomainAsyncTask(date, low, high,dao).execute(date).get()
+    }
+    fun monthlyCountAll(date: String): Double{
+        val dao = glikemiaDao
+        return  MonthlyCountAllAsyncTask(date, dao).execute(date).get()
+    }
 
 
 
@@ -283,6 +293,29 @@ class Repository(application: Application) {
             return dao.showIQRupper(d)
         }
 
+    }
+    private class MonthlyInDomainAsyncTask(date:String, low:String, high: String,dao: GlikemiaDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = date
+        val low = low
+        val hiigh = high
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.monthlyInDomain(d, low, hiigh)
+        }
+    }
+    private class MonthlyCountAllAsyncTask(date: String, dao: GlikemiaDAO): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val d = date
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.monthlyCountAll(d)
+        }
+    }
+    private class MonthlyAverageAsyncTask(date:String, dao: GlikemiaDAO ): AsyncTask<String, Unit, Double>(){
+        val dao = dao
+        val date = date
+        override fun doInBackground(vararg params: String?): Double {
+            return dao.monthlyAverage(date)
+        }
     }
 
 

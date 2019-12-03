@@ -20,12 +20,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alemz.dailydiabetic1.*
+import com.alemz.dailydiabetic1.adapters.GlikemiaAdapter
+import com.alemz.dailydiabetic1.adapters.InsulinAdapter
+import com.alemz.dailydiabetic1.adapters.MedAdapter
+import com.alemz.dailydiabetic1.adapters.PressureAdapter
 import com.alemz.dailydiabetic1.data.entities.*
 import java.text.SimpleDateFormat
 
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

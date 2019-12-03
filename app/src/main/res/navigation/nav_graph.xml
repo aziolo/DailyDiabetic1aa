@@ -3,13 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/calendarFragment">
+    app:startDestination="@id/firstFragment">
 
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.alemz.dailydiabetic1.view.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first" />
+        tools:layout="@layout/fragment_first" >
+        <action
+            android:id="@+id/action_firstFragment_to_secondFragment"
+            app:destination="@id/secondFragment" />
+    </fragment>
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.alemz.dailydiabetic1.view.SecondFragment"
@@ -39,4 +43,13 @@
         android:name="com.alemz.dailydiabetic1.view.RaportFragment"
         android:label="fragment_raport"
         tools:layout="@layout/fragment_raport" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.alemz.dailydiabetic1.view.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
 </navigation>

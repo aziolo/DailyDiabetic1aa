@@ -1,10 +1,11 @@
-package com.alemz.dailydiabetic1
+package com.alemz.dailydiabetic1.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.alemz.dailydiabetic1.R
 import com.alemz.dailydiabetic1.data.entities.MedicineEntity
 
 class MedAdapter: RecyclerView.Adapter<MedAdapter.MedHolder>()  {

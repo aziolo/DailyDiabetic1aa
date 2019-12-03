@@ -1,4 +1,4 @@
- package com.alemz.dailydiabetic1
+ package com.alemz.dailydiabetic1.view
 
 
 import android.net.Uri
@@ -9,11 +9,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-
-
-
-import com.alemz.dailydiabetic1.view.AddMeasurementFragment
-import com.alemz.dailydiabetic1.view.CalendarFragment
+import com.alemz.dailydiabetic1.R
 
 
  class NewMeasureActivity : AppCompatActivity(), AddMeasurementFragment.OnFragmentInteractionListener {

@@ -1,12 +1,14 @@
 package com.alemz.dailydiabetic1.view
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.navigation.Navigation
 import com.alemz.dailydiabetic1.R
@@ -64,6 +66,9 @@ class FirstFragment : Fragment() {
         //
         view.findViewById<ImageButton>(R.id.buttonGotoSettings).setOnClickListener {
             //Navigation.findNavController(view).navigate(R.id.action_firstFragment_to_calendarFragment)
+        }
+        view.findViewById<Button>(R.id.button2).setOnClickListener {
+
         }
 
         return view

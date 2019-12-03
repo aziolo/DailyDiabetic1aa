@@ -27,13 +27,62 @@
 
     </com.github.mikephil.charting.charts.LineChart>
 
+
     <TextView
-        android:id="@+id/texhahaha"
+        android:id="@+id/textView_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fgsgsdg"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/glikemiaChart" />
+
+    <TextView
+        android:id="@+id/textView_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_average" />
+
+    <TextView
+        android:id="@+id/textView_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_low" />
+
+    <TextView
+        android:id="@+id/textView_in_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_high" />
+
+    <TextView
+        android:id="@+id/textView_std"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="odchylenie stand"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_in_target" />
+
+    <TextView
+        android:id="@+id/textView_var_sd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="wsp zmienności"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_std" />
+
+    <TextView
+        android:id="@+id/textView_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_var_sd" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
