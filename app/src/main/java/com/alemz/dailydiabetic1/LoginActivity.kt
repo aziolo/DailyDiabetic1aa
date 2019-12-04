@@ -7,11 +7,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+
+// Co zmieniłem:
+// przeniosłem gso z onCreate
+// zmieniłem nazwę zmiennej mGoogleSignInClient na googleSignInClient
+// usunąłem authListener
+// podmieniłem klucz w requestIdToken
+// dodałem onclicklistener do przycisku
 
 
 class LoginActivity : AppCompatActivity() {
@@ -20,37 +28,42 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var authListener: FirebaseAuth.AuthStateListener
     private var RC_SIGN_IN: Int = 1
 
-    public override fun onStart() {
-        super.onStart()
-        auth.addAuthStateListener(authListener)
-        // Check if user is signed in (non-null) and update UI accordingly.
-//        val currentUser = auth.currentUser
-//        updateUI(currentUser)
-    }
+    // Configure Google Sign In
+    private val gso: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        // Musisz podmienić getString(R.string.default_web_client_id) na klucz wygenerowany do swojego projektu
+        // Open google-services.json file -> client -> oauth_client -> client_id
+        .requestIdToken("619729371358-1niad3upq7f6kahspf2375bav1sudpvs.apps.googleusercontent.com")
+        .requestEmail()
+        .build()
 
-
+    // wartość przypiszesz w onCreate, ale zmienna musi być dostępna dla całej klasy
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // Build a GoogleSignInClient with the options specified by gso.
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+
         val googleButton: SignInButton = findViewById(R.id.google_button)
-
-        authListener = FirebaseAuth.AuthStateListener() {
-            onAuth
+        googleButton.setOnClickListener {
+            signIn()
         }
+    }
 
-        // Configure Google Sign In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+    public override fun onStart() {
+        super.onStart()
 
-        // Build a GoogleSignInClient with the options specified by gso.
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // tutaj odpalasz kolejną aktywnosć, chyba, że chcesz zrobić coś jeszcze po zalogowaniu
+            Toast.makeText(this,"start MainActivity", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun signIn() {
@@ -72,7 +85,9 @@ class LoginActivity : AppCompatActivity() {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG", "Google sign in failed", e)
                 // ...
-                Toast.makeText(this,"Autoryzacja nie powidła się", Toast.LENGTH_LONG)
+
+                // Nie zapominaj o show(), bo Toast się nie pokaże
+                Toast.makeText(this,"Autoryzacja nie powiodła się", Toast.LENGTH_LONG).show()
             }
         }
 
